@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    {% verbatim %}
+        <p>This won't be {{ var }} rendered</p>
+    {% endverbatim %}
+    {{18327464363|filesizeformat}}
+    <br>
+    {{876565784452|stringformat:".3f"}}
+    {% for post in posts %}
+        <li style="background-color: {% cycle 'LightBlue' 'LightPink'%}}">
+            {{ post|capfirst }}
+        </li>
+        <p>Read more <a href="{% url 'posts:post-detail' post.id %}">here</a></p>
+    
+        {% endfor %}
+        <a href="{% url 'posts:add-post' %}">Añadir un Post</a>
+    {% endblock %}
+    
+
+</body>
+</html>
+
+
