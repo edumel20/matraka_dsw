@@ -1,0 +1,8 @@
+
+{% extends "base.html" %}
+{% include "header.html" %}
+{% block content%}
+<p>Bienvenido al Matrakazo</p>
+<p><a href="{% url 'accounts:login' %}">Login</a></p>
+<p>¿No estás registrado?, Registrate <a href="accounts:">aquí</a></p>
+{% endblock  %}

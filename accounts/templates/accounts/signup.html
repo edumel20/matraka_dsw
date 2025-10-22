@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<fieldset class"login_form">
+<form method="post" action="{% url 'signup' %}">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Sign up">
+</form>
+</fieldset>
+{% endblock  %}

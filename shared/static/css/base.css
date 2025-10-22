@@ -1,0 +1,19 @@
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: antiquewhite;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+li {
+  text-align: left;
+  border-width: 1px;
+}
+
+.login_form {
+  border: solid;
+  text-align: center;
+}
