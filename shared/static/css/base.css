@@ -17,3 +17,10 @@ li {
   border: solid;
   text-align: center;
 }
+
+.don_pollo_img {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  left: 300px;
+}

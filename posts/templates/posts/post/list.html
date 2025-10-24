@@ -17,7 +17,7 @@
     <br>
     {{user}}
     {% for post in posts %}
-        <li style="background-color: {% cycle 'LightBlue' 'LightPink'%}}">
+        <li style="background-color: '{% cycle 'LightBlue' 'LightPink'%}'">
             {{ post|capfirst }}
         </li>
         <p>Read more <a href="{% url 'posts:post-detail' %}">here</a></p>

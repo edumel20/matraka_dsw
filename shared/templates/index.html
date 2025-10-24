@@ -1,8 +1,10 @@
-
 {% extends "base.html" %}
-{% include "header.html" %}
+{% load static %}
 {% block content%}
+{% include "header.html" %}
 <p>Bienvenido al Matrakazo</p>
+<p>Visite nuestra<a href="{% url 'posts:post-list' %}">lista de posts</a></p>
+<img class="don_pollo_img" src="{% static 'images/don_pollo.webp' %}" alt="El mismísimo Don Pollo">
 <p><a href="{% url 'accounts:login' %}">Login</a></p>
-<p>¿No estás registrado?, Registrate <a href="accounts:">aquí</a></p>
+<p>¿No estás registrado?, Registrate <a href="{% url 'accounts:signup' %}">aquí</a></p>
 {% endblock  %}
