@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-</head>
-<body>
+
     {% extends "base.html" %}
     {% block content %}
+    {% include "header.html" %}
     {% verbatim %}
         <p>This won't be {{ var }} rendered</p>
     {% endverbatim %}
@@ -20,7 +14,7 @@
         <li style="background-color: '{% cycle 'LightBlue' 'LightPink'%}'">
             {{ post|capfirst }}
         </li>
-        <p>Read more <a href="{% url 'posts:post-detail' %}">here</a></p>
+        <p>Read more <a href="{% url 'posts:post-detail' post.slug%}">here</a></p>
     
         {% endfor %}
         <a href="{% url 'posts:add-post' %}">Añadir un Post</a>
@@ -33,7 +27,5 @@
     {% endblock %}
     
 
-</body>
-</html>
 
 
