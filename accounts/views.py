@@ -30,7 +30,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('posts:post-list')
+    return redirect('index')
 
 
 def user_signup(request):
@@ -38,7 +38,7 @@ def user_signup(request):
         if (form := SignupForm(request.POST)).is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('index')
     else:
         form = SignupForm()
     return render(request, 'accounts/signup.html', dict(form=form))

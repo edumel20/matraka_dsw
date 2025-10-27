@@ -25,8 +25,9 @@ def post_detail(request, post_slug: str):
 def add_post(request):
     if request.method == 'POST':
         if (form := AddPostForm(request.POST)).is_valid():
+            post = form.save(commit=False)
+            post.slug = slugify(post.title)
             form.save()
-
             return redirect('posts:post-list')
 
     else:

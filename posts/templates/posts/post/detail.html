@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-  {% for post in posts %}
-    <li>
-    {% if forloop.first %}
-        {{ post }}
-    {% else %}
-        {{ post }}
-    {% endif %}
-    </li>
-{% endfor %}
+{% include "header.html" %}
+
+<p>title: {{post.title}}</p>
+<br>
+<p>content: {{post.content}}</p>
+
+{% comment "" %} bucle para comments = for comment in post.comments {% endcomment %}
+<p><a href="{% url 'posts:post-list' %}">Back</a></p>
 {% endblock %}
 
 
