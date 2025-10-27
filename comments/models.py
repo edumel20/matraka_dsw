@@ -12,6 +12,12 @@ class Comment(models.Model):
         blank=True,
         null=True,
     )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE
-    )
+    created = models.DateTimeField(default=timezone.now)
+    active = models.BooleanField(default=True)
+
+
+    class Meta:
+        ordering = ('created',)
+    
+    def __str__(self):
+        return f'{self.alias or "Anonymous"} on {self.post}'
