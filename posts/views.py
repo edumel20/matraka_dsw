@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
 
@@ -18,7 +18,7 @@ def post_detail(request, post_slug: str):
     try:
         post = Post.objects.get(slug=post_slug)
     except Post.DoesNotExist:
-        return HttpResponse(f'Post with slug "{post_slug}" does not exist!')
+        return HttpResponseNotFound(f'Post with slug "{post_slug}" does not exist!')
     return render(request, 'posts/post/detail.html', {'post': post})
 
 
