@@ -22,6 +22,11 @@ class Post(models.Model):
     content = models.TextField()
     category = models.CharField(max_length=3, choices=Category, default=Category.SOCIETY)
     rating = models.IntegerField(choices=Rating, default=Rating.AVERAGE)
+    labels = models.ManyToManyField(
+        'labels.Label',
+        related_name='posts',
+        blank=True,
+    )
 
     def __str__(self):
         return f'PK={self.pk}: {self.title}'
