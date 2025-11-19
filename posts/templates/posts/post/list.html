@@ -10,6 +10,22 @@
     {{876565784452|stringformat:".3f"}}
     <br>
     {{user}}
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<ul class="posts">
+{% for post in posts %}
+    <li><a href="{% url 'posts:post-detail' post.slug %}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+
     {% for post in posts %}
         <li style="background-color: '{% cycle 'LightBlue' 'LightPink'%}'">
             {{ post|capfirst }}

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect, render
@@ -53,3 +54,15 @@ def edit_post(request, post_slug):
         form = EditPostForm(instance=post)
 
     return render(request, 'posts/edit_post.html', dict(post=post, form=form))
+
+
+def delete_post(request, post_slug: str):
+    try:
+        post = Post.objects.get(slug=post_slug)
+        messages.success(request, 'Post deleted successfully')
+
+    except Post.DoesNotExist:
+        messages.error(request, 'Post does not exist')
+
+    posts = Post.objects.all()
+    return render(request, 'posts/post/list.html', {'posts': posts})
