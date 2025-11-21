@@ -2,7 +2,7 @@
 {% load static %}
 {% block content%}
 {% include "header.html" %}
-<p>Bienvenido al Matrakazo</p>
+<p>Bienvenido al Matrakazo {{user.first_name}}</p>
 <p>Visite nuestra<a href="{% url 'posts:post-list' %}"> lista de posts</a></p>
 <img class="don_pollo_img" src="{% static 'images/don_pollo.webp' %}" alt="El mismísimo Don Pollo">
 <p><a href="{% url 'login' %}">Login</a></p>

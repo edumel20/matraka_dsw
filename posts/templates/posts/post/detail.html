@@ -2,10 +2,13 @@
 {% block content %}
 {% include "header.html" %}
 
-<p>title: {{post.title}}</p>
+<p>Title: {{post.title}}</p>
 <br>
-<p>content: {{post.content}}</p>
-
+<p>Content: {{post.content}}</p>
+<br>
+<p>Category: {{post.get_category_display}} || Rating: {{post.get_rating_display}}</p>
+<br>
+<p>Reason: {{post.seals.all}}</p>
 {% comment "" %} bucle para comments = for comment in post.comments {% endcomment %}
 <p><a href="{% url 'posts:post-list' %}">Back</a></p>
 {% endblock %}

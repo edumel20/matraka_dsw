@@ -25,6 +25,7 @@ class Post(models.Model):
     labels = models.ManyToManyField(
         'labels.Label',
         related_name='posts',
+        through='reasons.Reason',
         blank=True,
     )
 
