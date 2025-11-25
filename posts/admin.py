@@ -1,7 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
-from .models import Post
+from .models import Post, PostLabelingDetail
+
+
+class PostLabelDetailInline(admin.TabularInline):
+    model = PostLabelingDetail
+    extra = 1
 
 
 @admin.register(Post)

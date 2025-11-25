@@ -25,7 +25,6 @@ class Post(models.Model):
     labels = models.ManyToManyField(
         'labels.Label',
         related_name='posts',
-        through='reasons.Reason',
         blank=True,
     )
 
@@ -35,3 +34,24 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+class PostLabelingDetail(models.Model):
+    post = models.ForeignKey(
+        'posts.Post',
+        related_name='post_labeling_details',
+        on_delete=models.CASCADE,
+    )
+    label = models.ForeignKey(
+        'labels.Label',
+        related_name='post_labeling_details',
+        on_delete=models.CASCADE,
+    )
+    reason = models.CharField(max_length=256)
+    labelled_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post', 'label')
+
+    def __str__(self):
+        return f'{self.reason} ({self.labelled_at.strftime("%d-%m-%Y")})'

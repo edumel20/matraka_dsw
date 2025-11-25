@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'comments.apps.CommentsConfig',
     'labels.apps.LabelsConfig',
-    'reasons.apps.ReasonsConfig',
 ]
 
 MIDDLEWARE = [
