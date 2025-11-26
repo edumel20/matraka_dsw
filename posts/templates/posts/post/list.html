@@ -1,5 +1,6 @@
 
     {% extends "base.html" %}
+    
     {% block content %}
     {% include "header.html" %}
     {% verbatim %}
@@ -20,19 +21,13 @@
 </ul>
 {% endif %}
 
-<ul class="posts">
-{% for post in posts %}
-    <li><a href="{% url 'posts:post-detail' post.slug %}">{{ post.title }}</a></li>
-{% endfor %}
-</ul>
 
     {% for post in posts %}
         <li style="background-color: '{% cycle 'LightBlue' 'LightPink'%}'">
             {{ post|capfirst }}
         </li>
         <p>Read more <a href="{% url 'posts:post-detail' post.slug%}">here</a></p>
-    
-        {% endfor %}
+    {% endfor %}
         <a href="{% url 'posts:add-post' %}">Añadir un Post</a>
         <br>
         <a href="{% url 'login' %}">Login</a>

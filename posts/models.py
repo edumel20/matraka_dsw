@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -21,7 +22,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=256)
     content = models.TextField()
     category = models.CharField(max_length=3, choices=Category, default=Category.SOCIETY)
-    rating = models.IntegerField(choices=Rating, default=Rating.AVERAGE)
+    rating = models.FloatField(default=0)
     labels = models.ManyToManyField(
         'labels.Label',
         related_name='posts',
@@ -34,6 +35,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+        def get_absolute_url(self):
+            return reverse('posts:post-detail', args=[self.slug])
 
 
 class PostLabelingDetail(models.Model):
