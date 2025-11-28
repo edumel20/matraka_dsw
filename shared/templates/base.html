@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% if title %}{{ title }} | {% endif %}Blog</title>
     {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-icons/font/bootstrap-icons.min.css' %}">
     <link rel='stylesheet' href="{% static 'css/base.css' %}">
   </head>
 
   <body>
+  {% include "setlang.html" %}
+  {% block content %}{% endblock %}
     <div class="container">
-        {% block content %}{% endblock %}
     </div>
   </body>
+  <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
 </html>

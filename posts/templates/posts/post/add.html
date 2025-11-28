@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario</title>
-</head>
-<body>
-  <form method="post" novalidate>
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<form method="post" novalidate>
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Enviar">
+    <button type="submit">{% translate "Add post" %}</button>
 </form>
-</body>
-</html>
+{% endblock %}

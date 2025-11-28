@@ -134,3 +134,31 @@ secret-key:
     from django.core.management.utils import get_random_secret_key
     print(get_random_secret_key())
     '
+# Make locale folder for all custom apps
+[group('i18n')]
+makelocale:
+    #!/usr/bin/env bash
+    uv run manage.py shell -v0 -c '
+    from pathlib import Path
+    from django.conf import settings
+
+    for folder in settings.BASE_DIR.iterdir():
+        if folder.is_dir() and (folder / "apps.py").exists():
+            Path(folder / "locale").mkdir(exist_ok=True)
+    '
+    echo "✔ Each app folder has now a 'locale' folder" 
+
+# Make i18n messages
+[group('i18n')]
+makemessages locale="es":
+    uv run manage.py makemessages -l {{ locale }}
+
+# Compile i18n messages
+[group('i18n')]
+compilemessages:
+    uv run manage.py compilemessages -i .venv
+
+# Launch Django RQ worker (development) through watchdog
+[group('redis')]
+rq:
+    uv run watchmedo auto-restart --pattern=tasks.py --recursive -- ./manage.py rqworker 

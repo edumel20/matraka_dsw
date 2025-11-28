@@ -19,8 +19,11 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.urls import include, path
 
+import shared.views
+
 urlpatterns = [
     path('', lambda r: render(r, 'index.html'), name='index'),
+    path('setlang/<str:langcode>/', shared.views.setlang, name='setlang'),
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
     path('accounts/', include('accounts.urls')),
