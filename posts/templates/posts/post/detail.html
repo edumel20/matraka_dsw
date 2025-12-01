@@ -1,8 +1,16 @@
 {% extends "base.html" %}
+{% load thumbnail %}
+{% load markdownify %}
 {% block content %}
 {% include "header.html" %}
 
 <p>Title: {{post.title}}</p>
+<br>
+<p>{{ post.content|markdownify }}</p>
+<br>
+{% thumbnail post.cover "200x200" crop="center" format="PNG" as thumb %}
+    <img src="{{ thumb.url }}" alt="Post cover">
+  {% endthumbnail %}
 <br>
 <p>Content: {{post.content}}</p>
 <br>

@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotFound
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
 
 from .forms import AddPostForm, EditPostForm
 from .models import Post
@@ -19,7 +20,8 @@ def post_detail(request, post_slug: str):
     try:
         post = Post.objects.get(slug=post_slug)
     except Post.DoesNotExist:
-        return HttpResponseNotFound(f'Post with slug "{post_slug}" does not exist!')
+        msg = _('Post {ps} does not exist'.format(ps=post_slug))
+        return HttpResponse(msg, status=404)
     return render(request, 'posts/post/detail.html', {'post': post})
 
 

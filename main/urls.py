@@ -15,16 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import include, path
 
 import shared.views
 
-urlpatterns = [
+urlpatterns = [path('i18n/', include('django.conf.urls.i18n'))] + i18n_patterns(
     path('', lambda r: render(r, 'index.html'), name='index'),
     path('setlang/<str:langcode>/', shared.views.setlang, name='setlang'),
     path('admin/', admin.site.urls),
+    path('__reload__/', include('django_browser_reload.urls')),
     path('posts/', include('posts.urls')),
     path('accounts/', include('accounts.urls')),
-]
+    path('django-rq/', include('django_rq.urls')),
+)

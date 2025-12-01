@@ -1,3 +1,5 @@
+{% load shared_extras %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,8 +13,10 @@
   </head>
 
   <body>
-  {% include "setlang.html" %}
-  {% block content %}{% endblock %}
+
+  {% block content %}
+  {% setlang %}
+  {% endblock %}
     <div class="container">
     </div>
   </body>
