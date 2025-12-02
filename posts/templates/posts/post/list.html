@@ -24,6 +24,7 @@
 <h3>Last Post</h3>
 {{last_post}}
 <br>
+<br>
     {% for post in posts %}
         <li style="background-color: '{% cycle 'LightBlue' 'LightPink'%}'">
             {{ post|capfirst }}

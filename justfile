@@ -101,14 +101,25 @@ set-tz timezone="Atlantic/Canary":
         echo "✔ Fixed TIME_ZONE='{{ timezone }}' and LANGUAGE_CODE='es-es'"
     fi
 
-# Remove migrations and database. Reset DB artefacts.
-[confirm("⚠️ All migrations and database will be removed. Continue? [yN]:")]
-[group('migrations')]
-reset-db: && makemigrations migrate create-su
+# Remove migrations
+[confirm("⚠️ All migrations will be removed. Continue? [yN]:")]
+[group('utils')]
+rm-migrations:
     #!/usr/bin/env bash
     find . -path "*/migrations/*.py" ! -path "./.venv/*" ! -name "__init__.py" -delete
     find . -path "*/migrations/*.pyc" ! -path "./.venv/*" -delete
+
+# Remove database
+[confirm("⚠️ Database will be removed. Continue? [yN]:")]
+[group('utils')]
+@rm-database:
     rm -f db.sqlite3
+
+# Remove migrations and database. Reset DB artefacts.
+[confirm("⚠️ All migrations and database will be removed. Continue? [yN]:")]
+[group('utils')]
+reset-db: rm-migrations rm-database && makemigrations migrate create-su
+    echo "✔ Database reseted."
 
 # Remove virtualenv
 [confirm("⚠️ Virtualenv './venv' will be removed. Continue? [yN]:")]
@@ -134,6 +145,7 @@ secret-key:
     from django.core.management.utils import get_random_secret_key
     print(get_random_secret_key())
     '
+
 # Make locale folder for all custom apps
 [group('i18n')]
 makelocale:
@@ -157,6 +169,11 @@ makemessages locale="es":
 [group('i18n')]
 compilemessages:
     uv run manage.py compilemessages -i .venv
+
+# Open Poedit
+[group('i18n')]
+poedit app locale="es":
+    poedit ./{{ app }}/locale/{{ locale }}/LC_MESSAGES/django.po
 
 # Launch Django RQ worker (development) through watchdog
 [group('redis')]

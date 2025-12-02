@@ -10,10 +10,13 @@ dependencies = [
     "django-browser-reload>=1.21.0",
     "django-markdownify>=0.9.5",
     "django-rq>=3.2.1",
+    "prettyconf>=2.3.0",
     "sorl-thumbnail>=12.11.0",
+    "weasyprint>=66.0",
 ]
 
 [dependency-groups]
 dev = [
     "ipython>=9.6.0",
+    "watchdog>=6.0.0",
 ]

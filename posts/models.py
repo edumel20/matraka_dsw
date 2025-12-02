@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from . import tasks
+
 
 class Post(models.Model):
     class Category(models.TextChoices):
@@ -33,8 +35,10 @@ class Post(models.Model):
         return f'PK={self.pk}: {self.title}'
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        if not self.slug:
+            self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+        tasks.post_stats.delay()
 
         def get_absolute_url(self):
             return reverse('posts:post-detail', args=[self.slug])
