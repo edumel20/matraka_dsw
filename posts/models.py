@@ -21,15 +21,11 @@ class Post(models.Model):
         EXCELLENT = 5
 
     title = models.CharField(max_length=256)
-    slug = models.SlugField(max_length=256)
+    slug = models.SlugField(max_length=256, unique=True)
     content = models.TextField()
-    category = models.CharField(max_length=3, choices=Category, default=Category.SOCIETY)
-    rating = models.FloatField(default=0)
-    labels = models.ManyToManyField(
-        'labels.Label',
-        related_name='posts',
-        blank=True,
-    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    cover = models.ImageField(upload_to='covers', default='covers/nocover.png')
 
     def __str__(self):
         return f'PK={self.pk}: {self.title}'
