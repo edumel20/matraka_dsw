@@ -21,6 +21,7 @@ from django.shortcuts import render
 from django.urls import include, path
 
 import shared.views
+import users.views
 
 urlpatterns = [path('i18n/', include('django.conf.urls.i18n'))] + i18n_patterns(
     path('', lambda r: render(r, 'index.html'), name='index'),
@@ -30,4 +31,5 @@ urlpatterns = [path('i18n/', include('django.conf.urls.i18n'))] + i18n_patterns(
     path('posts/', include('posts.urls')),
     path('accounts/', include('accounts.urls')),
     path('django-rq/', include('django_rq.urls')),
+    path('api/auth/', users.views.auth, name='auth'),
 )

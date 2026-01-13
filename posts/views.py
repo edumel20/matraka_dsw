@@ -1,42 +1,52 @@
+import json
+
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
-from django.utils.translation import gettext as _
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
 
-from .forms import AddPostForm, EditPostForm
+from users.decorators import auth_required
+
+from .forms import EditPostForm
 from .models import Post
+from .serializers import PostSerializer
 
 
+@csrf_exempt
+@require_GET
 def post_list(request):
     posts = Post.objects.all()
-    print(f'{request.user=}')
-    return render(request, 'posts/post/list.html', {'posts': posts})
+    serializer = PostSerializer(posts)
+    return serializer.json_response()
 
 
-@login_required
+@csrf_exempt
+@require_GET
 def post_detail(request, post_slug: str):
     try:
         post = Post.objects.get(slug=post_slug)
     except Post.DoesNotExist:
-        msg = _('Post {ps} does not exist'.format(ps=post_slug))
-        return HttpResponse(msg, status=404)
-    return render(request, 'posts/post/detail.html', {'post': post})
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    serializer = PostSerializer(post)
+    return serializer.json_response()
 
 
+@csrf_exempt
+@require_POST
+@auth_required
 def add_post(request):
-    if request.method == 'POST':
-        if (form := AddPostForm(request.POST)).is_valid():
-            post = form.save(commit=False)
-            post.slug = slugify(post.title)
-            form.save()
-            return redirect('posts:post-list')
-
-    else:
-        form = AddPostForm()
-
-    return render(request, 'posts/post/add.html', dict(form=form))
+    try:
+        payload = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON body'}, status=400)
+    post = Post.objects.create(
+        title=payload['title'],
+        slug=slugify(payload['title']),
+        content=payload['content'],
+    )
+    return JsonResponse({'id': post.pk})
 
 
 def edit_post(request, post_slug):

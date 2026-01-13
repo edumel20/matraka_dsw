@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'comments.apps.CommentsConfig',
     'labels.apps.LabelsConfig',
+    'users.apps.UsersConfig',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
